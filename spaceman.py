@@ -17,7 +17,11 @@ def load_word():
 
     words_list = words_list[0].split(' ')
     secret_word = random.choice(words_list)
+    print(secret_word)
     return secret_word
+
+
+load_word()
 
 
 def is_word_guessed(secret_word, letters_guessed):
@@ -32,6 +36,12 @@ def is_word_guessed(secret_word, letters_guessed):
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
     pass
 
+    # for letters in secret_word:
+    #     if letters != letters_guessed:
+
+
+guessed_word = []
+
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -43,7 +53,8 @@ def get_guessed_word(secret_word, letters_guessed):
         string: letters and underscores.  For letters in the word that the user has guessed correctly, the string should contain the letter at the correct position.  For letters in the word that the user has not yet guessed, shown an _ (underscore) instead.
     '''
 
-    # TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
+    # TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly
+    # TODO: so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
 
     pass
 
@@ -58,8 +69,6 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     # TODO: check if the letter guess is in the secret word
-
-    pass
 
 
 def spaceman(secret_word):
