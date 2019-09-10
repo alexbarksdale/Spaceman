@@ -69,6 +69,22 @@ def win_checker(secret_word):
     return True
 
 
+def play_again():
+    playagain = input('Want to play to play again? (yes/no): ')
+    while True:
+        if playagain.lower() == "yes":
+            os.system('clear')
+            print(Fore.CYAN + 'Thanks for playing again!' + Fore.RESET)
+            correct_list.clear()
+            incorrect_list.clear()
+            spaceman(load_word())
+            return True
+        else:
+            os.system('clear')
+            print('Thanks for playing!')
+            return False
+
+
 def spaceman(secret_word):
     guessCounter = 7
     while True:
@@ -96,10 +112,12 @@ def spaceman(secret_word):
         if win == False:
             print(
                 Fore.RED + f'\nYou lost! The word was: {secret_word}' + Fore.RESET)
+            play_again()
             break
         elif win == True:
             print(
                 Fore.GREEN + f'\nYou won! The word was: {secret_word}' + Fore.RESET)
+            play_again()
             break
 
 
