@@ -3,10 +3,11 @@ import os
 import re
 from colorama import Fore, Back, Style
 
-# TODO: Tell the user how many guesses they have left
-# TODO: Remove line 65 later
+# TODO: Ask the user to play again
+# TODO: remove secret_word print
 
 # Acknowledgement: load_word() is from starter code
+# Starter code: https://github.com/Make-School-Courses/CS-1.1-Intro-to-Programming/blob/master/Projects/Spaceman/spaceman.py
 
 
 def load_word():
@@ -19,7 +20,6 @@ def load_word():
     return secret_word
 
 
-# Stores the correct words and wrong words
 correct_list = []
 incorrect_list = []
 
@@ -36,60 +36,61 @@ def user_input():
             print(Fore.RED + 'Please use single letters only.' + Fore.RESET)
 
 
-def guess_checker(guess, secret_word):
+def guess_checker(guess, secret_word, guessCounter):
+    print('\n------------------------------------------')
     if guess in correct_list:
         print(Fore.GREEN +
-              '\nYou already got that letter correct' + Fore.RESET)
+              'You already guessed that letter correctly!' + Fore.RESET)
     elif guess in incorrect_list:
         print(Fore.RED +
-              '\nYou have already guessed that letter.' + Fore.RESET)
+              'You have already guessed that letter.' + Fore.RESET)
     elif guess in secret_word:
         correct_list.append(guess)
-        print('\nYou guessed a letter' +
+        print('You guessed a letter' +
               Fore.GREEN + ' correctly!' + Fore.RESET)
     else:
         incorrect_list.append(guess)
-        print('\nYou guessed' + Fore.RED + ' incorrectly!' + Fore.RESET)
+        guessCounter -= 1
+        print('You guessed' + Fore.RED + ' incorrectly!' + Fore.RESET +
+              '\nGuesses left: ' + Fore.YELLOW + str(guessCounter) + Fore.RESET)
 
-
-# Line 62: Checks to see if the user has guessed less than 7 times. Returns False if they lost.
-# Line 64: Loops through the letters of the secret_word
-# Line 65-67: Checks to see if the player won. If the letter (i) is not in the correct_list the player hasn't won yet, so
-# once the user has all of the letters in the correct_list it will loop out and return True. True = won
+    return guessCounter
 
 
 def win_checker(secret_word):
+    # Checks to see if the user has guessed less than 7 times. Returns False if they lost.
     if len(incorrect_list) >= 7:
         return False
+    # Checks to see if the player won. If the letter (i) is not in the correct_list the player hasn't won yet, so
+    # once the user has all of the letters in the correct_list it will loop out and return True. True = won
     for i in secret_word:
         if i not in correct_list:
             return 'Player hasn\'t won yet'
     return True
 
 
-# Line 76: Loops through the letters in the secret_word
-# Line 77: If a letter is in correct_list it will replace the spot with the letter (i).
-# Line 80: If there isn't a correct letter it will print '_' in position of the secret_word
-
-
 def spaceman(secret_word):
+    guessCounter = 7
     while True:
         print('------------------------------------------')
         print(Fore.MAGENTA + 'Guess the Spaceman\'s word!' + Fore.RESET)
         print(secret_word)
         print('\nCorrect letters: ')
+        # If a letter is in correct_list it will replace the spot with the letter (i).
         for i in secret_word:
             if i in correct_list:
                 # end=' ' Appends a space after the print statement
                 print(i, end=' ')
+            # If there isn't a correct letter it will print '_' in position of the secret_word
             else:
                 print('_', end=' ')
         print('\n\nIncorrect letters: ')
         for i in incorrect_list:
             print(i, end=' ')
+
         print('\n-----------------------------------------')
         guess = user_input()
-        guess_checker(guess, secret_word)
+        guessCounter = guess_checker(guess, secret_word, guessCounter)
         win = win_checker(secret_word)
 
         if win == False:
