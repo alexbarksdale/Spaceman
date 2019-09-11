@@ -3,11 +3,15 @@ import os
 import re
 from colorama import Fore, Back, Style
 
-# TODO: Ask the user to play again
-# TODO: remove secret_word print
+"""
+Loads the words.txt and randomly chooses a word
 
-# Acknowledgement: load_word() is from starter code
-# Starter code: https://github.com/Make-School-Courses/CS-1.1-Intro-to-Programming/blob/master/Projects/Spaceman/spaceman.py
+Acknowledgement: load_word() is from starter code
+Starter code: https://github.com/Make-School-Courses/CS-1.1-Intro-to-Programming/blob/master/Projects/Spaceman/spaceman.py
+
+Returns:
+A selected word (secret_word)
+"""
 
 
 def load_word():
@@ -23,7 +27,12 @@ def load_word():
 correct_list = []
 incorrect_list = []
 
-# user_input uses REGEX to look through the user's input and checks to see if there are only letters (A-Z)
+"""
+Uses REGEX to look through the user's input and checks to see if there are only letters (A-Z)
+
+Returns:
+The user's guess if it passes the check
+"""
 
 
 def user_input():
@@ -34,6 +43,19 @@ def user_input():
                 return guess
         else:
             print(Fore.RED + 'Please use single letters only.' + Fore.RESET)
+
+
+"""
+Checks the user's input to the secret_word and counts how many times they guess a letter
+
+Parameters:
+guess = user_input() - takes in the user input
+secret_word = A randomly selected word from the load_word() function
+guessCounter = Sets how many guesses the user can guess. The index is set in the spaceman() function
+
+Returns:
+The new guessCounter if it's updated
+"""
 
 
 def guess_checker(guess, secret_word, guessCounter):
@@ -57,12 +79,22 @@ def guess_checker(guess, secret_word, guessCounter):
     return guessCounter
 
 
+"""
+Checks to see if the player won. If the letter (i) is not in the correct_list the player hasn't won yet, so
+once the user has all of the letters in the correct_list it will loop out and return True. True = won
+
+Parameters:
+secret_word = A randomly selected word from the load_word() function
+
+Returns:
+False = The user lost
+True = The user won
+"""
+
+
 def win_checker(secret_word):
-    # Checks to see if the user has guessed less than 7 times. Returns False if they lost.
     if len(incorrect_list) >= 7:
         return False
-    # Checks to see if the player won. If the letter (i) is not in the correct_list the player hasn't won yet, so
-    # once the user has all of the letters in the correct_list it will loop out and return True. True = won
     for i in secret_word:
         if i not in correct_list:
             return 'Player hasn\'t won yet'
@@ -71,26 +103,37 @@ def win_checker(secret_word):
 
 def play_again():
     playagain = input('Want to play to play again? (yes/no): ')
-    while True:
-        if playagain.lower() == "yes":
-            os.system('clear')
-            print(Fore.CYAN + 'Thanks for playing again!' + Fore.RESET)
-            correct_list.clear()
-            incorrect_list.clear()
-            spaceman(load_word())
-            return True
-        else:
-            os.system('clear')
-            print('Thanks for playing!')
-            return False
+    if playagain.lower() == "yes":
+        os.system('clear')
+        print(Fore.CYAN + 'Thanks for playing again!' + Fore.RESET)
+
+        correct_list.clear()
+        incorrect_list.clear()
+        spaceman(load_word())
+
+        return True
+
+    else:
+        os.system('clear')
+        print('Thanks for playing!')
+        return False
+
+
+"""
+Continues to tell the user the game's information and checks to see if the 
+win_checker() returns True or False to determine if the user won or lost. 
+
+Parameters: 
+secret_word = A randomly selected word from the load_word() function
+"""
 
 
 def spaceman(secret_word):
     guessCounter = 7
+
     while True:
         print('------------------------------------------')
         print(Fore.MAGENTA + 'Guess the Spaceman\'s word!' + Fore.RESET)
-        print(secret_word)
         print('\nCorrect letters: ')
         # If a letter is in correct_list it will replace the spot with the letter (i).
         for i in secret_word:
@@ -105,6 +148,7 @@ def spaceman(secret_word):
             print(i, end=' ')
 
         print('\n-----------------------------------------')
+
         guess = user_input()
         guessCounter = guess_checker(guess, secret_word, guessCounter)
         win = win_checker(secret_word)
