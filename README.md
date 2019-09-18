@@ -23,6 +23,15 @@ python3 spaceman.py
 ```
 2. Guess the word!
 
+
+### Running tests
+To run the unit test functions:
+
+1. Open your terminal
+```
+python3 -m unittest test_spaceman.py
+```
+
 ## Acknowledgments
 
 * Used a function from Make School's starter code for this project
