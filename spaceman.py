@@ -97,7 +97,7 @@ def win_checker(secret_word):
         return False
     for i in secret_word:
         if i not in correct_list:
-            return 'Player hasn\'t won yet'
+            return
     return True
 
 
@@ -133,6 +133,7 @@ def spaceman(secret_word):
 
     while True:
         print('------------------------------------------')
+        print(secret_word)
         print(Fore.MAGENTA + 'Guess the Spaceman\'s word!' + Fore.RESET)
         print('\nCorrect letters: ')
         # If a letter is in correct_list it will replace the spot with the letter (i).
