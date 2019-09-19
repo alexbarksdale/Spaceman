@@ -31,6 +31,7 @@ To run the unit test functions:
 ```
 python3 -m unittest test_spaceman.py
 ```
+2. You must complete the game and answer 'no' in order to see the unit test results
 
 ## Acknowledgments
 
